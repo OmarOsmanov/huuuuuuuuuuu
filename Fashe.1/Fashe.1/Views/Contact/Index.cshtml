@@ -1,0 +1,61 @@
+﻿@model VmContact
+@inject IHttpContextAccessor _httpContext
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="scrollTop" id="scrollTop">
+    <button><i class="fa fa-angle-double-up"></i></button>
+</div>
+<section class="cart contact mb-5">
+    <div class="row">
+        <div>
+            <img src="images/heading-pages-06.jpg" alt="">
+            <h1>CONTACT</h1>
+        </div>
+    </div>
+</section>
+
+<section class="sendMessage">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3039.748317523034!2d49.81325711480371!3d40.370104666398866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307dc397d94dc3%3A0x617bc46b47244c00!2sAzerbaijan%20Technical%20University!5e0!3m2!1sen!2s!4v1644583263983!5m2!1sen!2s"
+                        width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" class="w-100"></iframe>
+
+
+            </div>
+            <div class="col-lg-6">
+                <h3>Send us your message</h3>
+                @if (_httpContext.HttpContext.Session.GetString("Success") != null)
+                {
+                    <div class="alert alert-success">
+                        @_httpContext.HttpContext.Session.GetString("Success")
+                    </div>
+
+                    _httpContext.HttpContext.Session.Remove("Success");
+                }
+
+                @if (_httpContext.HttpContext.Session.GetString("Error") != null)
+                {
+                    <div class="alert alert-danger">
+                        @_httpContext.HttpContext.Session.GetString("Error")
+                    </div>
+
+                    _httpContext.HttpContext.Session.Remove("Error");
+                }
+                <form asp-controller="contact" asp-action="message" method="post" >
+                    <input asp-for="@Model.Message.Fullname"  class="form-control" placeholder="Full Name ">
+                    <input asp-for="@Model.Message.PhoneNumber"  class="form-control" placeholder="Phone Number">
+                    <input asp-for="@Model.Message.Email"   class="form-control" placeholder="Email Address">
+                    <textarea asp-for="@Model.Message.Text"  placeholder="Message" class="form-control"></textarea>
+                    <button type="submit" class="btn btn-dark">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
